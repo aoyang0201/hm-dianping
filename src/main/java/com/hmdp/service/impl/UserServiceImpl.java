@@ -71,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             user = createUserWithPhone(phone);
         }
 
-        String token = UUID.randomUUID().toString();
+        String token = UUID.randomUUID().toString();//为啥不能加true
         UserDTO userDTO = BeanUtil.copyProperties(user,UserDTO.class);
         Map<String, Object> userMap = BeanUtil.beanToMap(userDTO, new HashMap<>(), CopyOptions.create()
                 .setIgnoreNullValue(true)
