@@ -66,6 +66,8 @@ public class CacheClient {
         return r;
     }
 
+    private static final ExecutorService CACHE_REBUID_EXECUTOR =
+            Executors.newFixedThreadPool(10);
 
     public <R, ID> R queryWithLogicExpire(
             String keyPrefix,ID id, Class<R> type, Function<ID,R> dbFallback, Long time, TimeUnit unit)
@@ -106,9 +108,6 @@ public class CacheClient {
         //7.返回
         return r;
     }
-
-    private static final ExecutorService CACHE_REBUID_EXECUTOR =
-            Executors.newFixedThreadPool(10);
 
     private boolean trylock(String key){
         Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, "1", 10, TimeUnit.MINUTES);
