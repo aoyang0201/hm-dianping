@@ -9,6 +9,7 @@ import com.hmdp.mapper.ShopTypeMapper;
 import com.hmdp.service.IShopTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,7 +38,6 @@ public class ShopTypeServiceImpl extends ServiceImpl<ShopTypeMapper, ShopType> i
 
         // 1.从 Redis 中查询商铺缓存
         String shopTypeJson = stringRedisTemplate.opsForValue().get(CACHE_SHOP_TYPE_KEY);
-
         // 2.判断 Redis 中是否存在数据
         if (StrUtil.isNotBlank(shopTypeJson)) {
             // 2.1.存在，则返回

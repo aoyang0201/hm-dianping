@@ -25,3 +25,10 @@ mybatis-plus:
 logging:
   level:
     com.hmdp: debug
+rocketmq:
+  name-server: 192.168.61.128:9876
+  producer:
+    group: seckill-producer-group
+    access-key: rocketmq2
+    secret-key: 12345678
+    send-message-timeout: 3000  # 消息发送的超时时间
