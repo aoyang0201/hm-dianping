@@ -57,8 +57,7 @@ import java.util.concurrent.Executors;
  */
 @Service
 @Slf4j
-@RocketMQMessageListener(topic = "RLT_TEST_TOPIC", consumerGroup = "voucherOrder_con-group")
-public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, VoucherOrder> implements IVoucherOrderService ,RocketMQListener<MessageExt> {
+public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, VoucherOrder> implements IVoucherOrderService {
 
     @Resource
     private ISeckillVoucherService seckillVoucherService;
@@ -176,20 +175,6 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
         }
 
     }*/
-
-//    利用RocketMQ,不过最好还是专门有个类来处理
-    @Override
-    public void onMessage(MessageExt message) {
-        String msg = new String(message.getBody());
-        VoucherOrder voucherOrder = JSONUtil.toBean(msg, VoucherOrder.class);
-        if(message.getReconsumeTimes() == 3){
-            log.error("{}消费了3次都消费失败",voucherOrder.toString());
-            //消息入库，人工干预
-        }
-        log.info("voucherOrder:{}",voucherOrder.toString());
-        handleVoucherOrder(voucherOrder);
-    }
-
 
 //    利用redis的Stream
 /*    private class VoucharOrderHandler implements Runnable{
